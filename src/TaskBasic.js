@@ -1,31 +1,36 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import './App.css';
 
-const TaskBasic = () => {
-  const [items, setItems] = useState("");
+function App() {
+  const [task, setTask] = useState('');
+  const [tasks, setTasks] = useState([]);
 
-  const [arrayItems, setArrayItems] = useState([]);
-
-  const iterationItems = (e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
-    setItems("");
-    setArrayItems([...arrayItems, items]);
+    setTasks([...tasks, task]);
   };
-  const resp = arrayItems.map((item) => <li key={item}>{item}</li>);
+
   return (
-    <div className="tasks">
+    <div className='container'>
       <h1>Task Basic</h1>
-      <form>
-        <h4>Enter a task</h4>
+      <form onSubmit={submitHandler}>
         <input
-          type="text"
-          value={items}
-          onChange={(e) => setItems(e.target.value)}
+          type='text'
+          placeholder='Ingrese la tarea'
+          value={task}
+          onChange={(e) => setTask(e.target.value)}
         />
-        <button onClick={iterationItems}>Add Task</button>
+        <button type='submit'>Agregar Tarea</button>
       </form>
-      <ul>{resp}</ul>
+      <div className='tasks-container'>
+        {tasks.map((item, index) => (
+          <div key={index} className='task-card'>
+            {item}
+          </div>
+        ))}
+      </div>
     </div>
   );
-};
+}
 
-export default TaskBasic;
+export default App;
